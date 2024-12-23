@@ -10,27 +10,26 @@ class EmployeeDAO(BaseDAO):
 
     @classmethod
     async def add_employee(cls, session: AsyncSession, data: dict) -> Employee:
-        employee = cls.model(username=data['username'], email=data['email'])
-        session.add(employee)
-        await session.flush()
-
         profile = Profile(
-            user_id=employee.id,
-            first_name=employee['first_name'],
-            last_name=employee.get('last_name'),
-            age=employee.get('age'),
-            gender=employee['gender'],
-            profession=employee.get('profession'),
-            salary=employee.get('salary'),
-            phone=employee.get('phone'),
-            contacts=employee.get('contacts'),
-            interests=employee.get('interests'),
-            status=employee.get('status'),
-            grade=employee.get('grade'),
+            first_name=data['first_name'],
+            last_name=data.get('last_name'),
+            age=data.get('age'),
+            gender=data['gender'],
+            profession=data.get('profession'),
+            salary=data.get('salary'),
+            phone=data.get('phone'),
+            contacts=data.get('contacts'),
+            interests=data.get('interests'),
+            status=data.get('status'),
+            grade=data.get('grade'),
         )
 
         session.add(profile)
+        await session.flush()
+
+        employee = cls.model(username=data['username'], email=data['email'], profile_id=profile.id)
+        session.add(employee)
+
         await session.commit()
 
         return employee
-
