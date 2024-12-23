@@ -1,7 +1,7 @@
 from typing import List
 
 from sqlalchemy import text, ARRAY, String, JSON
-from sqlalchemy.orm import Mapped, mapped_column
+from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from db.database import Base
 from enums.profile import GenderEnum, ProfessionEnum, StatusEnum, GradeEnum
@@ -28,3 +28,4 @@ class Profile(Base):
         default=GradeEnum.JUNIOR,
         server_default=text("'JUNIOR'")
     )
+    user: Mapped["User"] = relationship("User", back_populates="profile", uselist=False)
