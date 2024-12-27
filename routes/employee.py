@@ -2,7 +2,7 @@ from typing import List
 
 from fastapi import APIRouter, status
 
-from service.employee import get_all_employees, create_employee, delete_employee
+from service.employee import get_all_employees, create_employee, delete_employee, get_employee_by_id
 from schemas.employee import EmployeeSchema, EmployeeCreate
 
 router = APIRouter(prefix='/employees', tags=['employees'])
@@ -20,6 +20,11 @@ async def get_all_employees_route():
     return await get_all_employees()
 
 
-@router.delete('/{employee_id}')
+@router.get('/{employee_id}', response_model=EmployeeSchema, status_code=status.HTTP_200_OK)
+async def get_employee_by_id_route(employee_id: int):
+    return await get_employee_by_id(id=employee_id)
+
+
+@router.delete('/{employee_id}', status_code=status.HTTP_200_OK)
 async def delete_employee_route(employee_id: int):
     return await delete_employee(employee_id=employee_id)

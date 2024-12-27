@@ -28,6 +28,14 @@ class BaseDAO:
         return records
 
     @classmethod
+    async def get_by_id(cls, session: AsyncSession, data_id: int):
+        try:
+            return await session.get(cls.model, data_id)
+        except SQLAlchemyError as e:
+            print(f"Error occurred: {e}")
+            raise
+
+    @classmethod
     async def delete(cls, session: AsyncSession, query_id: int):
         try:
             query = select(cls.model).filter_by(id=query_id)

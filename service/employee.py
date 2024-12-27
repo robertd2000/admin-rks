@@ -22,6 +22,11 @@ async def get_all_employees(session: AsyncSession) -> List[EmployeeSchema]:
 
 
 @connection
+async def get_employee_by_id(id: int, session: AsyncSession) -> EmployeeSchema:
+    return await EmployeeDAO.get_by_id(session=session, data_id=id)
+
+
+@connection
 async def create_employee(data: EmployeeCreate, session: AsyncSession) -> int:
     employee_dict = data.model_dump()
 

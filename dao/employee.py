@@ -33,3 +33,7 @@ class EmployeeDAO(BaseDAO):
         await session.commit()
 
         return employee
+
+    # @classmethod
+    # async def update_employee(cls, session: AsyncSession, data: dict) -> Employee:
+    #     employee = cls.get_all()
