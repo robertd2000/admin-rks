@@ -11,9 +11,15 @@ from schemas.employee import EmployeeCreate, EmployeeSchema
 
 @connection
 async def add_employee(user_data: dict, session: AsyncSession) -> int:
-    new_employee = EmployeeDAO.add_employee(session, **user_data)
+    new_employee = await EmployeeDAO.add_employee(session, **user_data)
     print(f"Добавлен новый сотрудник с ID: {new_employee.id}")
     return new_employee.id
+
+
+@connection
+async def edit_employee(data: dict, employee_id: int, session: AsyncSession) -> int:
+    updated_employee = await EmployeeDAO.update_employee(session, employee_id=employee_id, **data)
+    return updated_employee.id
 
 
 @connection
