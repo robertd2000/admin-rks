@@ -1,6 +1,6 @@
 from typing import List
 
-from sqlalchemy import text, ARRAY, String, JSON
+from sqlalchemy import text, ARRAY, String, JSON, ForeignKey
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from db.database import Base
@@ -28,4 +28,4 @@ class Profile(Base):
         default=GradeEnum.JUNIOR,
         server_default=text("'JUNIOR'")
     )
-    user: Mapped["User"] = relationship("User", back_populates="profile", uselist=False)
+    employee = relationship("Employee", back_populates="profile", uselist=False)
