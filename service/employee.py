@@ -7,19 +7,18 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from dao.employee import EmployeeDAO
 from db.decorators import connection
 from schemas.employee import EmployeeCreate, EmployeeSchema
+from schemas.profile import ProfileEditSchema
 
 
 @connection
-async def add_employee(user_data: dict, session: AsyncSession) -> int:
-    new_employee = await EmployeeDAO.add_employee(session, **user_data)
-    print(f"Добавлен новый сотрудник с ID: {new_employee.id}")
-    return new_employee.id
+async def edit_employee(data: ProfileEditSchema, employee_id: int, session: AsyncSession) -> int:
+    employee_dict = data.model_dump()
 
-
-@connection
-async def edit_employee(data: dict, employee_id: int, session: AsyncSession) -> int:
-    updated_employee = await EmployeeDAO.update_employee(session, employee_id=employee_id, **data)
-    return updated_employee.id
+    try:
+        updated_employee = await EmployeeDAO.update_employee(session, employee_id=employee_id, data=employee_dict)
+        return updated_employee.id
+    except IntegrityError as e:
+        raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail=''.join(e.detail))
 
 
 @connection
@@ -28,8 +27,8 @@ async def get_all_employees(session: AsyncSession) -> List[EmployeeSchema]:
 
 
 @connection
-async def get_employee_by_id(id: int, session: AsyncSession) -> EmployeeSchema:
-    return await EmployeeDAO.get_by_id(session=session, data_id=id)
+async def get_employee_by_id(employee_id: int, session: AsyncSession) -> EmployeeSchema:
+    return await EmployeeDAO.get_by_id(session=session, data_id=employee_id)
 
 
 @connection

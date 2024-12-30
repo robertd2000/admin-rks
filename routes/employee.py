@@ -16,11 +16,11 @@ async def create_employee_route(data: EmployeeCreate):
     return {'status': 'success', 'message': f'ID {employee_id} успешно добавлен.'}
 
 
-@router.put('/{employee_id}', response_model=EmployeeSchema, status_code=status.HTTP_200_OK)
+@router.put('/{employee_id}', status_code=status.HTTP_200_OK)
 async def edit_employee_route(employee_id: int, data: ProfileEditSchema):
     employee = await edit_employee(employee_id=employee_id, data=data)
 
-    return {'status': 'success', 'message': f'ID {employee.id} успешно изменен.'}
+    return {'status': 'success', 'message': f'ID {employee} успешно изменен.'}
 
 
 @router.get('/', response_model=List[EmployeeSchema], status_code=status.HTTP_200_OK)
@@ -30,7 +30,7 @@ async def get_all_employees_route():
 
 @router.get('/{employee_id}', response_model=EmployeeSchema, status_code=status.HTTP_200_OK)
 async def get_employee_by_id_route(employee_id: int):
-    return await get_employee_by_id(id=employee_id)
+    return await get_employee_by_id(employee_id=employee_id)
 
 
 @router.delete('/{employee_id}', status_code=status.HTTP_200_OK)
