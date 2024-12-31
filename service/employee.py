@@ -40,7 +40,7 @@ async def create_employee(data: EmployeeCreate, session: AsyncSession) -> int:
 
         return employee.id
     except IntegrityError as e:
-        raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail=''.join(e.detail))
+        raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail=e.detail)
 
 
 @connection
