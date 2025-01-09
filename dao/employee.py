@@ -52,7 +52,7 @@ class EmployeeDAO(BaseDAO):
             employee.profile.status = data.get('status')
             employee.profile.grade = data.get('grade')
 
-            await session.flush()
+            await session.commit()
 
             return employee
         except SQLAlchemyError as e:
