@@ -21,6 +21,8 @@ class ProfileSchema(BaseModel):
 
 
 class ProfileEditSchema(BaseModel):
+    username: str
+    email: str
     first_name: str
     last_name: str | None
     age: int | None
