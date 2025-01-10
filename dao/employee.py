@@ -40,6 +40,8 @@ class EmployeeDAO(BaseDAO):
         employee = await cls.get_by_id(session=session, data_id=employee_id)
 
         try:
+            employee.email = data.get('email')
+            employee.username = data.get('username')
             employee.profile.first_name = data.get('first_name')
             employee.profile.last_name = data.get('last_name')
             employee.profile.age = data.get('age')

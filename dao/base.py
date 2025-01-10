@@ -33,7 +33,7 @@ class BaseDAO:
             return await session.get(cls.model, data_id)
         except SQLAlchemyError as e:
             print(f"Error occurred: {e}")
-            raise
+            raise e
 
     @classmethod
     async def delete(cls, session: AsyncSession, query_id: int):
