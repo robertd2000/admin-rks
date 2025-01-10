@@ -27,6 +27,7 @@ class GradeEnum(str, enum.Enum):
     MIDDLE = "MIDDLE"
     SENIOR = "SENIOR"
 
+
 class StatusEnum(str, enum.Enum):
     ACTIVE = "Активен"
     BANNED = "Заблокирован"
